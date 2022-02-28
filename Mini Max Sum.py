@@ -14,13 +14,13 @@ import sys
 
 def miniMaxSum(arr):
     # Write your code here
-    arr.sort()
-    s = sum(arr)
-    
-    minResult = s - arr[len(arr) - 1]
-    maxResult = s - arr[0]
-    
-    print(minResult, maxResult)
+    #arr.sort()
+    #s = sum(arr)
+    #
+    #minResult = s - arr[len(arr) - 1]
+    #maxResult = s - arr[0]
+    #
+    #print(minResult, maxResult)
 
     # Solution 2
     arr.sort()
