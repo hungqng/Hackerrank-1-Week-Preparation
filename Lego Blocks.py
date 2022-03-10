@@ -5,7 +5,7 @@ import os
 import random
 import re
 import sys
-import functools
+import datetime
 #
 # Complete the 'legoBlocks' function below.
 #
@@ -14,29 +14,35 @@ import functools
 #  1. INTEGER n
 #  2. INTEGER m
 #
-MOD=10**9+7
-@functools.lru_cache(None)
-def one_row(n): # ways to tile a single row with blocks of width 4,3,2,1
-    dp=[0]*max(n+1,5)
-    dp[0] = 1
-    for i in range(1,n+1):
-        sum_=0
-        for j in range(1,4+1):
-            sum_+=dp[i-j]
-        dp[i] = sum_
-    return dp[n]
-def all_possibilities(n, m):
-    return one_row(m)**n
 
 def legoBlocks(n, m):
     # Write your code here
-    if m == 1: return 1
-    all_poss = all_possibilities(n,m) % MOD
-    # print(f"all_poss {all_poss}")
-    broken = 0
-    for i in range(1, m):
-        broken+=(legoBlocks(n,i)*all_possibilities(n,m-i)) 
-    return (all_poss-broken) % MOD
+    A = 1000000000+7
+    r = [0]*(m+1)
+    a = [0]*(m+1)
+    print(datetime.datetime.now())
+
+    a[0] = 1
+    for j in range(1, m+1):
+        a[j] += a[j-1] if j-1>=0 else 0
+        a[j] += a[j-2] if j-2>=0 else 0
+        a[j] += a[j-3] if j-3>=0 else 0
+        a[j] += a[j-4] if j-4>=0 else 0
+    print(datetime.datetime.now())    
+    for j in range(1, m+1):
+        a[j] = a[j] % A
+        a[j] = a[j] ** n
+        a[j] = a[j] % A
+    print(datetime.datetime.now())
+    
+    r[1] = 1
+    for j in range(2, m+1):
+        r[j] = a[j]
+        for k in range(1, j):
+            r[j] -= r[k]*a[j-k]
+        r[j] = r[j] % A
+    print(datetime.datetime.now())
+    return r[m]%A
 
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
