@@ -15,17 +15,17 @@ import sys
 
 def gridChallenge(grid):
     # Write your code here
-    grid = [list(row) for row in grid]
-    r = len(grid)
-    c = len(grid[0])
-    for i in range(r):
-        grid[i].sort()
+    grid = [list(r) for r in grid]
     
-    for j in range(c):
-        for i in range(1, r):
+    for i in range(len(grid)):
+        grid[i].sort()
+        
+    for j in range(len(grid[0])):
+        for i in range(1, len(grid)):
             if not grid[i-1][j] <= grid[i][j]:
-                return "NO"
-    return "YES"
+                return 'NO'
+    return 'YES'
+
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
